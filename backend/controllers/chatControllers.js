@@ -66,7 +66,17 @@ const fetchChats = asyncHandler(async (req, res) => {
 })
 
 const createGroupChat = asyncHandler(async (req, res) => {
+    if (!req.body, users || !req.body.name) {
+        return res.status(400).send({ message: 'Please provide all required fields' })
+    }
 
+    var users = JSON.parse(req.body.users)
+
+    if (users.length < 2) {
+        return res
+            .status(400)
+            .send('Please provide at least 2 users to create a group chat')
+    }
 })
 
 module.exports = { accessChat, fetchChats, createGroupChat }
