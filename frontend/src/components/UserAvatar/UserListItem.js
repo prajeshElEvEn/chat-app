@@ -16,12 +16,15 @@ const UserListItem = ({ user, handleFunction }) => {
             alignItems={'center'}
             color='black'
             borderRadius={'lg'}
+            p={'1rem'}
+            mb={'1rem'}
         >
             <Avatar
                 size={'sm'}
                 cursor='pointer'
                 name={user.name}
                 src={user.pic}
+                mr={'1rem'}
             />
             <Box>
                 <Text>

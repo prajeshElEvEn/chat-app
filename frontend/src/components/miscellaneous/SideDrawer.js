@@ -1,6 +1,6 @@
 import { useState } from "react"
 import React from 'react'
-import { Box, Button, Tooltip, Text, Menu, MenuButton, MenuList, Avatar, MenuItem, MenuDivider, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, Input, useToast } from "@chakra-ui/react"
+import { Box, Button, Tooltip, Text, Menu, MenuButton, MenuList, Avatar, MenuItem, MenuDivider, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, Input, useToast, Spinner } from "@chakra-ui/react"
 import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { ChatState } from '../../context/chatProvider'
 import ProfileModal from "./ProfileModal"
@@ -15,7 +15,7 @@ const SideDrawer = () => {
     const [searchResult, setSearchResult] = useState([])
     const [loading, setLoading] = useState(false)
     const [loadingChat, setLoadingChat] = useState()
-    const { user } = ChatState()
+    const { user, setSelectedChat, chats, setChats } = ChatState()
     const history = useHistory()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const toast = useToast()
@@ -34,6 +34,7 @@ const SideDrawer = () => {
                 isClosable: true,
                 position: 'top-left',
             })
+            return
         }
 
         try {
@@ -41,7 +42,7 @@ const SideDrawer = () => {
 
             const config = {
                 headers: {
-                    Authorization: `Bearer $user.token`,
+                    Authorization: `Bearer ${user.token}`,
                 }
             }
 
@@ -61,8 +62,35 @@ const SideDrawer = () => {
         }
     }
 
-    const accessChat = (user) => {
+    const accessChat = async (userId) => {
+        try {
+            setLoadingChat(true)
 
+            const config = {
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: `Bearer ${user.token}`,
+                }
+            }
+
+            const { data } = await axios.post('/api/chat', { userId }, config)
+
+            if (!chats.find((c) => c._id === data._id)) {
+                setChats([data, ...chats])
+            }
+            setSelectedChat(data)
+            setLoadingChat(false)
+            onClose()
+        } catch (error) {
+            toast({
+                title: 'Something went wrong.',
+                description: error.message,
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+                position: 'bottom-left',
+            })
+        }
     }
 
     return (
@@ -71,9 +99,10 @@ const SideDrawer = () => {
                 d='flex'
                 justifyContent='space-between'
                 alignItems={'center'}
-                bg={'blue.100'}
+                bg={'blue.50'}
                 w='100%'
                 padding={'0.5rem 2rem'}
+                color={'blue.500'}
             >
                 <Tooltip
                     label='Search Users to chat'
@@ -84,7 +113,7 @@ const SideDrawer = () => {
                         variant={'ghost'}
                         onClick={onOpen}
                     >
-                        <box-icon name='search' ></box-icon>
+                        <box-icon name='search' color='blue' ></box-icon>
                         <Text
                             d={{ base: 'none', md: 'flex' }}
                             px={'4'}
@@ -176,6 +205,7 @@ const SideDrawer = () => {
                                 ))
                             )
                         }
+                        {loadingChat && <Spinner ml={'auto'} d={'flex'} />}
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>
