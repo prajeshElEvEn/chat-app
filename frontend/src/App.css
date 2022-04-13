@@ -5,3 +5,8 @@
   display: flex;
   background-color: rgb(53, 53, 53);
 }
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}

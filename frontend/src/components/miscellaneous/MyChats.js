@@ -5,8 +5,10 @@ import { ChatState } from '../../context/chatProvider'
 import axios from 'axios'
 import { AddIcon } from '@chakra-ui/icons'
 import ChatLoading from './ChatLoading'
+import { getSender } from '../../config/ChatLogics'
+import GroupChatModal from './GroupChatModal'
 
-const MyChats = () => {
+const MyChats = ({ fetchAgain }) => {
     const [loggedUser, setLoggedUser] = useState()
     const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState()
 
@@ -21,7 +23,7 @@ const MyChats = () => {
             }
 
             const { data } = await axios.get('/api/chat', config)
-            console.log(data)
+            // console.log(data)
             setChats(data)
         } catch (error) {
             toast({
@@ -38,7 +40,7 @@ const MyChats = () => {
     useEffect(() => {
         setLoggedUser(JSON.parse(localStorage.getItem('userInfo')))
         fetchChats()
-    }, [])
+    }, [fetchAgain])
 
     return (
         <Box
@@ -70,17 +72,19 @@ const MyChats = () => {
                 fontWeight={'bold'}
             >
                 My Chats
-                <Button
-                    d='flex'
-                    bg={'blue.500'}
-                    color={'white'}
-                    rightIcon={<AddIcon />}
-                    fontSize={
-                        { base: '17px', md: '10px', lg: '17px' }
-                    }
-                >
-                    New Group Chat
-                </Button>
+                <GroupChatModal>
+                    <Button
+                        d='flex'
+                        bg={'blue.500'}
+                        color={'white'}
+                        rightIcon={<AddIcon />}
+                        fontSize={
+                            { base: '17px', md: '10px', lg: '17px' }
+                        }
+                    >
+                        New Group Chat
+                    </Button>
+                </GroupChatModal>
             </Box>
             <Box
                 d={'flex'}
@@ -107,7 +111,7 @@ const MyChats = () => {
                                 key={chat._id}
                             >
                                 <Text>
-                                    {!chat.isGroupChat}
+                                    {!chat.isGroupChat ? (getSender(loggedUser, chat.users)) : (chat.chatName)}
                                 </Text>
                             </Box>
                         ))}

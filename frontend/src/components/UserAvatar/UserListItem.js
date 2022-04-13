@@ -5,7 +5,7 @@ const UserListItem = ({ user, handleFunction }) => {
     return (
         <Box
             onClick={handleFunction}
-            curson='pointer'
+            cursor='pointer'
             bg='#e8e8e8'
             _hover={{
                 background: '#38b2ac',
@@ -16,7 +16,7 @@ const UserListItem = ({ user, handleFunction }) => {
             alignItems={'center'}
             color='black'
             borderRadius={'lg'}
-            p={'1rem'}
+            p={'0.5rem 1rem'}
             mb={'1rem'}
         >
             <Avatar
