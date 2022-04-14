@@ -24,6 +24,10 @@ Learning to make a chat app using Socket.io
 
 [Chat App](https://learn-mern-chat.herokuapp.com/)
 
+# Status
+
+In progress...
+
 ## Reference
 
 [RoadsideCoder](https://www.youtube.com/playlist?list=PLKhlp2qtUcSZsGkxAdgnPcHioRr-4guZf)
