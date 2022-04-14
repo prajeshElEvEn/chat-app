@@ -3,7 +3,7 @@
 .App {
   min-height: 100vh;
   display: flex;
-  /* background-color: rgb(53, 53, 53); */
+  background-color: #f7fafc;
 }
 
 ::-webkit-scrollbar {
