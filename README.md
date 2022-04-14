@@ -13,7 +13,7 @@ Learning to make a chat app using Socket.io
 - [ReactJs](https://reactjs.org/)
 - [ExpressJs](http://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
-- [NodeJs(https://nodejs.org/en/)]
+- [NodeJs](https://nodejs.org/en/)
 - [Socket.Io](https://socket.io/)
 - [Chakra UI](https://chakra-ui.com/)
 - [Boxicons](https://boxicons.com/)
