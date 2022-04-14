@@ -124,7 +124,7 @@ const Login = () => {
                 variant='solid'
                 colorScheme='red'
                 onClick={() => {
-                    setEmail('guest@example.com')
+                    setEmail('guest@gmail.com')
                     setPassword('123456')
                 }}
             >

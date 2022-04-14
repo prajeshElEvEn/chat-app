@@ -7,7 +7,7 @@ import { ChatState } from '../../context/chatProvider'
 import UserBadgeItem from '../UserAvatar/UserBadgeItem'
 import UserListItem from '../UserAvatar/UserListItem'
 
-const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
+const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const { user, selectedChat, setSelectedChat } = ChatState()
     const [groupChatName, setGroupChatName] = useState()
@@ -43,6 +43,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
             }, config)
 
             user1._id === user._id ? setSelectedChat() : setSelectedChat(data)
+            fetchMessages()
             setFetchAgain(!fetchAgain)
             setLoading(false)
         } catch (error) {
